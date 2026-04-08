@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Admin Login</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<section class="box">
+
+<h2>Admin Login</h2>
+
+<input type="text" id="user" placeholder="Username"><br><br>
+<input type="password" id="pass" placeholder="Password"><br><br>
+
+<button onclick="login()">Login</button>
+
+<p id="error" style="color:red;"></p>
+
+</section>
+<section>
+    <button onclick="showPasswordBox()">Change Password</button>
+
+<div id="passBox" style="display:none; margin-top:15px;">
+<input type="password" id="oldPass" placeholder="Old Password"><br><br>
+<input type="password" id="newPass" placeholder="New Password"><br><br>
+<button onclick="changePassword()">Update</button>
+</div>
+</section>
+
+<script>
+function login(){
+let u = document.getElementById("user").value;
+let p = document.getElementById("pass").value;
+
+let savedPass = localStorage.getItem("adminPass") || "1234";
+
+if(u==="admin" && p===savedPass){
+localStorage.setItem("admin","true");
+window.location.href="admin.html";
+}else{
+document.getElementById("error").innerText="Wrong Login!";
+}
+}
+</script>
+
+</body>
+</html>

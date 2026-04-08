@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Admin Panel</title>
+<link rel="stylesheet" href="css/style.css">
+
+<script>
+if(localStorage.getItem("admin")!=="true"){
+alert("Access Denied!");
+window.location.href="admin-login.html";
+}
+</script>
+
+</head>
+
+<body>
+
+<header class="header">
+<h2>Admin Dashboard</h2>
+</header>
+
+<section class="content">
+
+<h2>Contact Messages</h2>
+
+<h3>Total Messages: <span id="count"></span></h3>
+
+<button onclick="clearAll()">Clear All</button>
+<button onclick="logout()">Logout</button>
+<button onclick="showPasswordBox()">Change Password</button>
+
+<div id="passBox" style="display:none;">
+<input type="password" id="oldPass" placeholder="Old Password"><br><br>
+<input type="password" id="newPass" placeholder="New Password"><br><br>
+<button onclick="changePassword()">Update</button>
+</div>
+
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Mobile</th>
+<th>Message</th>
+<th>Date</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody id="data"></tbody>
+
+</table>
+
+</section>
+
+<!-- SERVICES -->
+<section class="content">
+
+<h2>Manage Services</h2>
+
+<div class="service-form">
+
+<input type="text" id="sname" placeholder="Service Name">
+
+<input type="text" id="charge" placeholder="Charge (₹)">
+
+<input type="text" id="doc" placeholder="Required Documents">
+
+<select id="icon">
+<option value="fa-solid fa-id-card">🪪 ID Card</option>
+<option value="fa-solid fa-file-lines">📄 Document</option>
+<option value="fa-solid fa-bolt">⚡ Electricity</option>
+<option value="fa-solid fa-print">🖨 Printing</option>
+<option value="fa-solid fa-laptop">💻 Online Work</option>
+<option value="fa-solid fa-user">👤 User</option>
+<option value="fa-solid fa-file-invoice">🧾 Bill</option>
+<option value="fa-solid fa-hand-holding-dollar">💰 Money</option>
+<option value="fa-solid fa-camera">📷 Photo</option>
+<option value="fa-solid fa-passport">🛂 Passport</option>
+</select>
+
+<select id="category">
+<option value="">Select Category</option>
+<option value="Documents">📄 Documents</option>
+<option value="Card">💳 Card</option>
+<option value="Bill">⚡ Bill</option>
+<option value="Printing">🖨 Printing</option>
+<option value="Other">🧾 Other</option>
+</select>
+
+<select id="status">
+<option value="active">🟢 Active</option>
+<option value="off">🔴 Off</option>
+</select>
+
+<label class="highlight-box">
+<input type="checkbox" id="highlight"> 🔥 Highlight Service
+</label>
+
+<button onclick="addService()" class="btn-add">➕ Add Service</button>
+<button onclick="cancelEdit()">Cancel</button>
+</div>
+
+<h3>Service List</h3>
+
+<div id="serviceList" class="service-list"></div>
+
+</section>
+
+<script>
+let editIndex = -1;
+// 🔥 LOAD CONTACT DATA
+function loadData(){
+let data = JSON.parse(localStorage.getItem("messages")) || [];
+let html="";
+
+data.forEach((item,index)=>{
+html += `
+<tr>
+<td>${item.name}</td>
+<td>${item.mobile}</td>
+<td>${item.message}</td>
+<td>${item.date}</td>
+<td><button onclick="deleteMsg(${index})">Delete</button></td>
+</tr>
+`;
+});
+
+document.getElementById("data").innerHTML = html;
+updateCount();
+}
+
+// DELETE MESSAGE
+function deleteMsg(index){
+let data = JSON.parse(localStorage.getItem("messages"));
+data.splice(index,1);
+localStorage.setItem("messages", JSON.stringify(data));
+loadData();
+}
+
+// COUNT
+function updateCount(){
+let data = JSON.parse(localStorage.getItem("messages")) || [];
+document.getElementById("count").innerText = data.length;
+}
+
+// CLEAR ALL
+function clearAll(){
+if(confirm("Delete all messages?")){
+localStorage.removeItem("messages");
+loadData();
+}
+}
+
+// LOGOUT
+function logout(){
+localStorage.removeItem("admin");
+window.location.href="admin-login.html";
+}
+
+// 🔐 PASSWORD
+function showPasswordBox(){
+document.getElementById("passBox").style.display="block";
+}
+
+function changePassword(){
+let oldPass=document.getElementById("oldPass").value;
+let newPass=document.getElementById("newPass").value;
+
+let currentPass = localStorage.getItem("adminPass") || "1234";
+
+if(oldPass===currentPass){
+localStorage.setItem("adminPass", newPass);
+alert("Password Updated!");
+}else{
+alert("Wrong Old Password");
+}
+}
+
+// 🧾 SERVICES
+function addService(){
+
+let name=document.getElementById("sname").value;
+let charge=document.getElementById("charge").value;
+let doc=document.getElementById("doc").value;
+let icon=document.getElementById("icon").value;
+let category=document.getElementById("category").value;
+let status=document.getElementById("status").value;
+let highlight=document.getElementById("highlight").checked;
+
+// validation
+if(name==="" || charge==="" || category===""){
+alert("Please fill all fields");
+return;
+}
+
+let services = JSON.parse(localStorage.getItem("services")) || [];
+
+// 🔥 EDIT MODE
+if(editIndex !== -1){
+
+services[editIndex] = {
+name, charge, doc, icon, category, status, highlight
+};
+
+editIndex = -1;
+alert("Service Updated!");
+
+// button reset
+document.querySelector(".btn-add").innerText = "➕ Add Service";
+
+}else{
+
+// ➕ ADD MODE
+services.push({
+name, charge, doc, icon, category, status, highlight
+});
+
+alert("Service Added!");
+
+}
+
+localStorage.setItem("services", JSON.stringify(services));
+
+// reset form
+document.getElementById("sname").value="";
+document.getElementById("charge").value="";
+document.getElementById("doc").value="";
+document.getElementById("highlight").checked=false;
+
+loadServices();
+}
+
+
+function loadServices(){
+let services = JSON.parse(localStorage.getItem("services")) || [];
+let html="";
+
+services.forEach((s,i)=>{
+html += `
+<li>
+${s.name} - ₹${s.charge}
+
+<button onclick="editService(${i})">Edit</button>
+<button onclick="deleteService(${i})">Delete</button>
+
+</li>
+`;});
+
+document.getElementById("serviceList").innerHTML=html;
+}
+function editService(i){
+
+let services = JSON.parse(localStorage.getItem("services")) || [];
+let s = services[i];
+
+// form fill
+document.getElementById("sname").value = s.name;
+document.getElementById("charge").value = s.charge;
+document.getElementById("doc").value = s.doc;
+document.getElementById("icon").value = s.icon;
+document.getElementById("category").value = s.category;
+document.getElementById("status").value = s.status;
+document.getElementById("highlight").checked = s.highlight;
+
+// index save
+editIndex = i;
+
+// button text change
+document.querySelector(".btn-add").innerText = "Update Service";
+}
+
+
+function deleteService(i){
+let services = JSON.parse(localStorage.getItem("services"));
+services.splice(i,1);
+localStorage.setItem("services", JSON.stringify(services));
+loadServices();
+}
+
+// INIT
+loadData();
+loadServices();
+
+
+function cancelEdit(){
+
+editIndex = -1;
+
+document.getElementById("sname").value="";
+document.getElementById("charge").value="";
+document.getElementById("doc").value="";
+document.getElementById("highlight").checked=false;
+
+document.querySelector(".btn-add").innerText = "➕ Add Service";
+}
+</script>
+
+</body>
+</html>
