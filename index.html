@@ -89,6 +89,63 @@ box-shadow:0 0 10px rgba(0,0,0,0.3);
 .whatsapp:hover{
 background:#128C7E;
 }
+
+/* MOBILE */
+@media(max-width:768px){
+.carousel-item img{
+height:220px;
+}
+}
+
+@media(max-width:768px){
+.carousel-item img{
+height:220px;
+}
+}
+
+/* NAVBAR FIX */
+@media(max-width:768px){
+
+.menu{
+display:block;
+color:#fff;
+}
+
+/* ANIMATION NAV */
+#nav{
+position:absolute;
+top:60px;
+left:0;
+width:100%;
+background:#0b3d6d;
+flex-direction:column;
+
+max-height:0;
+overflow:hidden;
+transition:max-height 0.4s ease;
+}
+
+#nav.active{
+max-height:300px;
+}
+
+#nav a{
+display:block;
+padding:12px;
+border-top:1px solid #444;
+}
+
+/* CONTENT FIX */
+.content{
+padding:10px;
+}
+
+/* TEXT SIZE */
+h1{font-size:20px;}
+h2{font-size:18px;}
+p{font-size:14px;}
+
+}
 </style>
 </head>
 <body>
