@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Services</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<!-- AOS -->
+<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+<style>
+.services input{
+width:100%;
+padding:10px;
+margin:10px 0;
+border-radius:5px;
+border:1px solid #ccc;
+}
+
+.filter button{
+margin:5px;
+padding:8px 15px;
+border:none;
+background:#ff6600;
+color:#fff;
+border-radius:5px;
+cursor:pointer;
+}
+
+.filter button:hover{
+background:#000;
+}
+
+.card{
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-8px);
+box-shadow:0 10px 20px rgba(0,0,0,0.2);
+}
+</style>
+
+</head>
+<body>
+
+<header class="header">
+<img src="images/logo.png" class="logo-img">
+
+<nav id="nav">
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+<a href="services.html">Services</a>
+<a href="contact.html">Contact</a>
+</nav>
+
+<div class="menu" onclick="toggleMenu()">☰</div>
+</header>
+
+<section class="services" data-aos="fade-up">
+
+<h2>Our Services</h2>
+
+<input type="text" id="search" placeholder="Search Service..." onkeyup="searchService()">
+
+<div class="filter">
+<button onclick="filterService('all')">All</button>
+<button onclick="filterService('Documents')">Documents</button>
+<button onclick="filterService('Card')">Card</button>
+<button onclick="filterService('Bill')">Bill</button>
+<button onclick="filterService('Printing')">Printing</button>
+</div>
+
+<div class="grid" id="serviceContainer"></div>
+
+</section>
+
+<script src="js/script.js"></script>
+
+<script>
+let allServices = [];
+
+function loadServices(){
+let services = JSON.parse(localStorage.getItem("services")) || [];
+
+if(services.length === 0){
+services = [
+{name:"PAN Card",charge:"150",doc:"Aadhaar",icon:"fa-solid fa-id-card",category:"Card",status:"active",highlight:true},
+{name:"Income Certificate",charge:"100",doc:"Aadhaar",icon:"fa-solid fa-file-lines",category:"Documents",status:"active",highlight:false}
+];
+}
+
+allServices = services;
+displayServices(allServices);
+}
+
+function displayServices(list){
+let html="";
+
+list.forEach((s,index)=>{
+
+let status = s.status || "active";
+if(status === "off") return;
+
+html += `
+<div class="card ${s.highlight ? 'highlight' : ''}" data-aos="fade-up" data-aos-delay="${index*100}">
+<i class="${s.icon}"></i>
+<h3>${s.name}</h3>
+<p><b>₹${s.charge}</b></p>
+<p>${s.doc}</p>
+</div>
+`;
+});
+
+document.getElementById("serviceContainer").innerHTML = html;
+}
+
+function searchService(){
+let val = document.getElementById("search").value.toLowerCase();
+let filtered = allServices.filter(s => (s.name || "").toLowerCase().includes(val));
+displayServices(filtered);
+}
+
+function filterService(cat){
+if(cat === "all"){
+displayServices(allServices);
+}else{
+let filtered = allServices.filter(s => (s.category || "Other") === cat);
+displayServices(filtered);
+}
+}
+
+loadServices();
+</script>
+
+<!-- FOOTER -->
+<footer class="footer">
+<div class="footer-grid">
+<div>
+<h3>YASH CSC</h3>
+<p>All Government Services Available</p>
+</div>
+
+<div>
+<h3>Quick Links</h3>
+<a href="index.html">Home</a><br>
+<a href="about.html">About</a><br>
+<a href="services.html">Services</a><br>
+<a href="contact.html">Contact</a>
+</div>
+
+<div>
+<h3>Contact</h3>
+<p>📞 9454346847</p>
+<p>📍 Karaila Bazar</p>
+</div>
+</div>
+
+<p class="copy">© 2026 YASH COMPUTER AND JAN SEVA KENDRA</p>
+</footer>
+
+<!-- AOS -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+AOS.init({duration:1000});
+</script>
+
+</body>
+</html>
