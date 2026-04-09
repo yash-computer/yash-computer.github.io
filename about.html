@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,33 +12,21 @@
 <!-- ✅ BOOTSTRAP -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- ✅ AOS ANIMATION -->
+<!-- ✅ AOS -->
 <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
 <style>
 
-/* 🔥 SLIDER FORCE FIX */
-.carousel,
-.carousel-inner,
-.carousel-item{
-display:block !important;
-visibility:visible !important;
-}
+/* ❌ REMOVE OLD FORCE CSS (IMPORTANT) */
 
-/* IMAGE FIX */
+/* ✅ IMAGE FIX */
 .carousel-item img{
 width:100%;
-height:400px;
+height:600px;
 object-fit:cover;
 }
 
 /* MOBILE */
-@media(max-width:768px){
-.carousel-item img{
-height:220px;
-}
-}
-
 @media(max-width:768px){
 .carousel-item img{
 height:220px;
@@ -52,7 +41,6 @@ display:block;
 color:#fff;
 }
 
-/* ANIMATION NAV */
 #nav{
 position:absolute;
 top:60px;
@@ -70,26 +58,29 @@ transition:max-height 0.4s ease;
 max-height:300px;
 }
 
+#nav.active{
+display:flex !important;
+flex-direction:column;
+}
+
 #nav a{
 display:block;
 padding:12px;
 border-top:1px solid #444;
 }
 
-/* CONTENT FIX */
 .content{
 padding:10px;
 }
 
-/* TEXT SIZE */
 h1{font-size:20px;}
 h2{font-size:18px;}
 p{font-size:14px;}
-
 }
 
 </style>
 </head>
+
 <body>
 
 <header class="header">
@@ -108,21 +99,36 @@ p{font-size:14px;}
 <section class="content">
 
 <!-- 🔥 SLIDER START -->
-<div id="shopSlider" class="carousel slide mb-4" data-bs-ride="carousel" data-aos="zoom-in">
+<div id="shopSlider" class="carousel slide mb-4" data-bs-ride="carousel" data-bs-interval="3000">
 
 <div class="carousel-inner">
 
 <div class="carousel-item active">
-<img src="https://picsum.photos/800/400?1" class="d-block w-100">
+<img src="images/yash-computer.jpeg" class="d-block w-100">
 </div>
 
 <div class="carousel-item">
-<img src="shop-img.jpeg" class="d-block w-100">
+<img src="images/shop-img2.jpeg" class="d-block w-100">
 </div>
 
 <div class="carousel-item">
-<img src="https://picsum.photos/800/400?3" class="d-block w-100">
+<img src="images/shop-img.jpeg" class="d-block w-100">
 </div>
+
+<div class="carousel-item">
+<img src="images/shop-img3.jpeg" class="d-block w-100">
+</div>
+
+
+
+<div class="carousel-item">
+<img src="images/new-system.jpeg" class="d-block w-100">
+</div>
+
+<div class="carousel-item">
+<img src="images/slide1.png" class="d-block w-100">
+</div>
+
 </div>
 
 <button class="carousel-control-prev" type="button" data-bs-target="#shopSlider" data-bs-slide="prev">
@@ -136,7 +142,6 @@ p{font-size:14px;}
 </div>
 <!-- 🔥 SLIDER END -->
 
-
 <h2 data-aos="fade-up">About Our Center</h2>
 
 <div class="about-box" data-aos="fade-up">
@@ -147,8 +152,7 @@ p{font-size:14px;}
 
 <h3>💻 Computer Operator Services</h3>
 
-<p>हमारे यहाँ अनुभवी और कुशल Computer Operator उपलब्ध हैं, जो हर प्रकार के डिजिटल कार्य को सावधानी और सटीकता के साथ पूरा करते हैं।
-हम निम्न सेवाएं प्रदान करते हैं:</p>
+<p>हमारे यहाँ अनुभवी और कुशल Computer Operator उपलब्ध हैं, जो हर प्रकार के डिजिटल कार्य को सावधानी और सटीकता के साथ पूरा करते हैं। हम निम्न सेवाएं प्रदान करते हैं:</p>
 
 <ul align="center">
 <li>ऑनलाइन फॉर्म भरना (सरकारी / प्राइवेट)</li>
@@ -240,23 +244,22 @@ p{font-size:14px;}
 
 <script src="js/script.js"></script>
 
-<!-- ✅ BOOTSTRAP -->
+<!-- ✅ Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- ✅ AOS -->
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>
-AOS.init({
-duration: 1000
-});
+AOS.init({ duration: 1000 });
+
+
 function toggleMenu(){
 let nav = document.getElementById("nav");
-if(nav){
 nav.classList.toggle("active");
-}
 }
 
 </script>
 
 </body>
 </html>
+
