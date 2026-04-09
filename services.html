@@ -145,8 +145,15 @@ let services = JSON.parse(localStorage.getItem("services")) || [];
 
 if(services.length === 0){
 services = [
-{name:"PAN Card",charge:"150",doc:"Aadhaar",icon:"fa-solid fa-id-card",category:"Card",status:"active",highlight:true},
-{name:"Income Certificate",charge:"100",doc:"Aadhaar",icon:"fa-solid fa-file-lines",category:"Documents",status:"active",highlight:false}
+{name:"New or Correction PAN Card",charge:"200",doc:"Aadhaar,Mobile No.,Email",icon:"fa-solid fa-id-card",category:"Card",status:"active",highlight:true},
+{name:"Income/Cast/Domicile Certificate",charge:"80",doc:"Aadhaar+OTP",icon:"fa-solid fa-file-lines",category:"Documents",status:"active",highlight:true},
+{name:"Paasport Size Photo",charge:"20/3,30/6,50/12",doc:"NA",icon:"fa-solid fa-camera",category:"Printing",status:"active",highlight:true},
+{name:"Online Form",charge:"100",doc:"Aadhaar, Related Form Doc",icon:"fa-solid fa-file-pen",category:"Documents",status:"active",highlight:false},
+{name:"Online Pension",charge:"100",doc:"Aadhaar,BankPassbook",icon:"fa-solid fa-money-check-dollar",category:"Documents",status:"active",highlight:false},
+{name:"Whatsapp Print",charge:"10/1",doc:"NA",icon:"fa-brands fa-whatsapp",category:"Printing",status:"active",highlight:false},
+{name:"Typing",charge:"50/page",doc:"NA",icon:"fa-solid fa-keyboard",category:"Documents",status:"active",highlight:true},
+{name:"Online Varasat",charge:"100",doc:"Khatuni,Adhar",icon:"fa-solid fa-landmark",category:"Documents",status:"active",highlight:true},
+{name:"Bill Pay",charge:"Only Bill",doc:"Bill Receipt",icon:"fa-solid fa-file-invoice-dollar",category:"Bill",status:"active",highlight:false},
 ];
 }
 
